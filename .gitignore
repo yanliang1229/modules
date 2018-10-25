@@ -1,2 +1,6 @@
 *.o
 sound/aplay
+tags
+cscope.*
+.cproject
+.project
