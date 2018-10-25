@@ -378,7 +378,7 @@ static void signal_handler(int sig)
 	if (!quiet_mode)
 		fprintf(stderr, "Aborted by signal %s...\n", strsignal(sig));
 	if (handle)
-		snd_pcm_abort(handle);
+		//snd_pcm_abort(handle);
 	if (sig == SIGABRT) {
 		/* do not call snd_pcm_close() and abort immediately */
 		handle = NULL;

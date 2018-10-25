@@ -1,13 +1,15 @@
 objects := $(patsubst %.c, %.o, $(wildcard *.c)) 
 
-CC= arm-fsl-linux-gnueabi-gcc
+#CC= arm-fsl-linux-gnueabi-gcc
 
-LDFLAGS += -L/home/yanl1229/source/alsa-lib-1.1.2/output/lib -lasound
-CFLAGS += -g -I/home/yanl1229/source/alsa-lib-1.1.2/output/include -I./include
+#LDFLAGS += -L/home/yanl1229/source/alsa-lib-1.1.2/output/lib -lasound
+LDFLAGS += -lsalsa
+#CFLAGS += -g -I/home/yanl1229/source/alsa-lib-1.1.2/output/include -I./include
+CFLAGS += -g
 
 all: aplay 
 
-hwlib:$(objects)
+aplay:$(objects)
 	$(CC) -o aplay $(objects) $(CFLAGS) $(LDFLAGS) 
 
 tags:
