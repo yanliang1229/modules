@@ -1,0 +1,7 @@
+*.o
+tags
+cscope.*
+libusb
+.cproject
+.project
+
