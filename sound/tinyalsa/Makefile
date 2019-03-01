@@ -1,29 +1,26 @@
-CFLAGS = -c -fPIC -Wall
+CFLAGS = -c -fPIC -Wall -g
 INC = include
-OBJECTS = mixer.o pcm.o
-LIB = libtinyalsa.so
 CROSS_COMPILE =
 
-all: $(LIB) tinyplay tinycap tinymix tinypcminfo
+all: tinyplay tinycap tinymix
 
-tinyplay: $(LIB) tinyplay.o
-	$(CROSS_COMPILE)gcc tinyplay.o -L. -ltinyalsa -o tinyplay
+tinyplay: mixer.o pcm.o tinyplay.o
+	$(CROSS_COMPILE)gcc mixer.o pcm.o tinyplay.o  -o tinyplay
 
-tinycap: $(LIB) tinycap.o
-	$(CROSS_COMPILE)gcc tinycap.o -L. -ltinyalsa -o tinycap
+tinycap: mixer.o pcm.o tinycap.o
+	$(CROSS_COMPILE)gcc mixer.o pcm.o tinycap.o  -o tinycap
 
-tinymix: $(LIB) tinymix.o
-	$(CROSS_COMPILE)gcc tinymix.o -L. -ltinyalsa -o tinymix
-
-tinypcminfo: $(LIB) tinypcminfo.o
-	$(CROSS_COMPILE)gcc tinypcminfo.o -L. -ltinyalsa -o tinypcminfo
-
-$(LIB): $(OBJECTS)
-	$(CROSS_COMPILE)gcc -shared $(OBJECTS) -o $(LIB)
+tinymix: mixer.o pcm.o tinymix.o
+	$(CROSS_COMPILE)gcc mixer.o pcm.o tinymix.o  -o tinymix
 
 .c.o:
 	$(CROSS_COMPILE)gcc $(CFLAGS) $< -I$(INC)
 
+tags:
+	ctags -R .
+cscope:
+	cscope -Rbq
+
 clean:
-	-rm $(LIB) $(OBJECTS) tinyplay.o tinyplay tinycap.o tinycap \
-	tinymix.o tinymix tinypcminfo.o tinypcminfo
+	-rm -rf *.o tinyplay tinycap \
+		tinymix tags cscope.*
